@@ -1,0 +1,20 @@
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="App\Repository\AccountRepository" name="App\Entity\Account" table="account">
+        <id name="id" type="string" column="id">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="username" />
+        <field name="email" unique="true" />
+        <field name="roles" type="json" />
+        <field name="createdAt" type="datetimetz_immutable"/>
+        <field name="googleId" nullable="true" />
+        <field name="facebookId" nullable="true" />
+        <field name="avatar" nullable="true" />
+        <field name="hostedDomain" nullable="true" />
+        <one-to-many field="rates" target-entity="App\Entity\Rate" mapped-by="account" />
+        <one-to-many field="comments" target-entity="App\Entity\Comment" mapped-by="author" />
+    </entity>
+</doctrine-mapping>

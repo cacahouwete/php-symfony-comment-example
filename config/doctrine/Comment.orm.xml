@@ -1,0 +1,27 @@
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="App\Repository\CommentRepository" name="App\Entity\Comment" table="comment">
+        <id name="id" type="string" column="id">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="createdAt" type="datetimetz_immutable"/>
+        <field name="groupKey" length="50"/>
+        <field name="content" type="string" length="500" />
+        <field name="rate" type="float" nullable="true">
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
+        <many-to-one field="author" target-entity="App\Entity\Account" inversed-by="comments" />
+        <many-to-one field="parent" target-entity="App\Entity\Comment" inversed-by="children" />
+        <one-to-many field="children" target-entity="App\Entity\Comment" mapped-by="parent" />
+        <one-to-many field="rates" target-entity="App\Entity\Rate" mapped-by="comment" >
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

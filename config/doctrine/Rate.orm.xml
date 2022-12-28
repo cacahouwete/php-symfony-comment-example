@@ -1,0 +1,16 @@
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="App\Repository\RateRepository" name="App\Entity\Rate" table="rate">
+        <id name="account" association-key="true" />
+        <id name="comment" association-key="true" />
+        <field name="value" type="float" >
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
+        <many-to-one field="account" target-entity="App\Entity\Account" inversed-by="rates" />
+        <many-to-one field="comment" target-entity="App\Entity\Comment" inversed-by="rates" />
+    </entity>
+</doctrine-mapping>

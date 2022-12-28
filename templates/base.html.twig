@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block menu %}
+            <p>
+                <a href="{{ path('app_homepageaction__invoke') }}">Home</a>
+                <a href="{{ path('app_article1action__invoke') }}">Article 1</a>
+                <a href="{{ path('app_article2action__invoke') }}">Article 2</a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ path('app_connectaction__invoke') }}">Login</a>
+                {% endif %}
+            </p>
+        {% endblock %}
+        {% block body %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,47 @@
+App\Entity\Comment:
+  comment_article1_1:
+    __construct:
+      - 'com_a1_1'
+      - 'article1'
+      - 'Consequatur quisquam recusandae asperiores.'
+      - '@account_1'
+    __calls:
+      - addRate:
+          - '@account_1'
+          - 1
+      - addRate:
+          - '@account_2'
+          - 2
+      - addRate:
+          - '@account_3'
+          - 5
+  comment_article1_1_child:
+    __construct:
+      - 'com_a1_1_child'
+      - 'article1'
+      - 'Lorem child'
+      - '@account_5'
+      - '@comment_article1_1'
+    __calls:
+      - addRate:
+          - '@account_2'
+          - 2
+  comment_article1_{2..10}:
+    __construct:
+      - 'com_a1_<current()>'
+      - 'article1'
+      - '<sentence(3, true)>'
+      - '@account_<current()>'
+    __calls:
+      - addRate:
+          - '@account_1'
+          - 1
+      - addRate:
+          - '@account_2'
+          - 2
+  comment_article2_{1..5}:
+    __construct:
+      - 'com_a2_<current()>'
+      - 'article2'
+      - '<sentence(3, true)>'
+      - '@account_<current()>'

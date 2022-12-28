@@ -1,0 +1,96 @@
+default:
+  suites:
+    api-read:
+      contexts:
+        - ORMReadContext
+        - Behat\MinkExtension\Context\MinkContext
+        - Behatch\Context\BrowserContext
+        - behatch:context:json
+        - behatch:context:xml
+        - behatch:context:rest
+        - Behatch\Context\DebugContext:
+            screenshotDir: './var/log'
+      filters:
+        tags: '@read&&~@javascript'
+    api-write:
+      contexts:
+        - ORMWriteContext
+        - Behat\MinkExtension\Context\MinkContext
+        - Behatch\Context\BrowserContext
+        - behatch:context:json
+        - behatch:context:xml
+        - behatch:context:rest
+        - Behatch\Context\DebugContext:
+            screenshotDir: './var/log'
+      filters:
+        tags: '@write&&~@javascript'
+
+    chrome_js_read:
+      mink_javascript_session: chrome_javascript_session
+      contexts:
+        - ORMReadContext
+        - Behatch\Context\BrowserContext
+        - Behat\MinkExtension\Context\MinkContext
+        - Behatch\Context\DebugContext:
+            screenshotDir: './var/log'
+      filters:
+        tags: '@read&&@javascript'
+    chrome_js_write:
+      mink_javascript_session: chrome_javascript_session
+      contexts:
+        - ORMWriteContext
+        - Behatch\Context\BrowserContext
+        - Behat\MinkExtension\Context\MinkContext
+        - Behatch\Context\DebugContext:
+            screenshotDir: './var/log'
+      filters:
+        tags: '@write&&@javascript'
+
+#    firefox_js_read:
+#      mink_javascript_session: firefox_javascript_session
+#      contexts:
+#        - ORMReadContext
+#        - Behatch\Context\BrowserContext
+#        - Behat\MinkExtension\Context\MinkContext
+#        - Behatch\Context\DebugContext:
+#            screenshotDir: './var/log'
+#      filters:
+#        tags: '@read&&@javascript'
+#    firefox_js_write:
+#      mink_javascript_session: firefox_javascript_session
+#      contexts:
+#        - ORMWriteContext
+#        - Behatch\Context\BrowserContext
+#        - Behat\MinkExtension\Context\MinkContext
+#        - Behatch\Context\DebugContext:
+#            screenshotDir: './var/log'
+#      filters:
+#        tags: '@write&&@javascript'
+
+  extensions:
+    Behatch\Extension: ~
+    Behat\MinkExtension:
+      base_url: 'http://comment.test/'
+      sessions:
+        default_session:
+          goutte: ~
+        chrome_javascript_session:
+          selenium2:
+            wd_host: 'http://chrometesting:4444/wd/hub'
+            browser: chrome
+            capabilities:
+              chrome:
+                switches:
+                  - "--headless"
+                  - "--disable-gpu"
+                  - "--no-sandbox"
+              extra_capabilities:
+                "goog:chromeOptions":
+                  w3c: false
+#        firefox_javascript_session:
+#          selenium2:
+#            wd_host: 'http://firefoxtesting:4444/wd/hub'
+#            browser: firefox
+
+  formatters:
+    pretty: true

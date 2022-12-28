@@ -1,0 +1,51 @@
+networks:
+  proxy_network:
+    external: true
+    name: proxy_network
+
+services:
+  app:
+    build:
+      target: dev
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy_network
+      traefik.http.routers.comment.rule: Host(`comment.localhost`) || Host(`comment.test`)
+
+    networks:
+      default:
+        aliases:
+          - comment.test
+      proxy_network: ~
+    volumes:
+      - .:/srv
+      - ~/.composer:/home/.composer
+      - ~/.composer:/root/.composer
+      - ~/.ssh:/home/.ssh
+#      - ~/.config/JetBrains/PhpStorm2022.3:/home/.PhpStorm
+
+#  postgres:
+#    working_dir: /srv
+#    volumes:
+#      - ./:/srv/
+#    ports:
+#      - "5442:5432"
+
+  chrometesting:
+    image: selenium/standalone-chrome-debug
+#    ports:
+#      - "5903:5900"
+
+#  firefoxtesting:
+#    image: selenium/standalone-firefox-debug
+#    ports:
+#      - "5904:5900"
+
+  traefik:
+    image: traefik:latest
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/traefik.yml:/etc/traefik/traefik.yml

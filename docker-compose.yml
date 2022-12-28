@@ -1,0 +1,20 @@
+networks:
+  proarti_network:
+    external: true
+    name: proarti_network
+
+services:
+  app:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+      target: prod
+    networks:
+      default: ~
+      proarti_network: ~
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_PASSWORD: babar
+      POSTGRES_USER: runner

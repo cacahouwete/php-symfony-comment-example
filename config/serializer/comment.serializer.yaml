@@ -1,0 +1,18 @@
+App\Entity\Comment:
+  attributes:
+    id:
+      groups: ['comment:read']
+    createdAt:
+      groups: ['comment:read']
+    groupKey:
+      groups: ['comment:read']
+    content:
+      groups: ['comment:read']
+    rate:
+      groups: ['comment:read']
+    children:
+      groups: ['comment:read']
+    authorAvatar:
+      groups: ['comment:read']
+    authorUsername:
+      groups: ['comment:read']
